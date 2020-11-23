@@ -4,7 +4,6 @@ import cgi
 from Srevice import ToDoService
 
 app = Flask(__name__)
-c = 0
 
 
 @app.route("/")
@@ -48,5 +47,3 @@ if __name__ == "__main__":
     Schema()
 
     app.run(debug=True)
-
-#    create_todo()
