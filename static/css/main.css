@@ -1,0 +1,23 @@
+th {
+    border: 1px solid black;
+    text-align: center;
+    border-collapse: collapse;
+    background-color: #d8d812;
+}
+
+td{
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+div.content{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+table{
+    text-align: center;
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+}
