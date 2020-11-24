@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block head %} 
+<title>Login</title>
+<script defer src="login-page.js"></script>
+{% endblock %}
+
+{% block body %}
+<!-- <div id="error-display">
+    <p> Invalid User ID or Password</p>
+</div> -->
+
+<div id = "login-form" class = "login">
+    <h3>Sign in</h3>
+    <form action="/login" method="POST">
+        <label for="uid">
+            <b>UID:</b>
+        </label><br>
+        <input type="text" name="uid" id="uid" placeholder="User ID"><br>
+        <label for="pwd">
+            <b>Password:</b>
+        </label><br>
+        <input type="password" name="pwd" id="pwd" placeholder="Enter Your Password"><br>
+        <input type="reset" value="Reset">
+        <input type="submit" id = "submit-form" value="submit"><br>
+        <a href="/registration">Register</a> <a href="">Forgot Password?</a>
+    </form>
+</div>
+{% endblock %}

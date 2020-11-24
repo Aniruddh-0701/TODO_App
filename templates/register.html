@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block head %} 
+<title>Register</title>
+<!-- <script defer src="login-page.js"></script> -->
+{% endblock %}
+
+{% block body %}
+
+<div id="register-form" class="register">
+    <h3>Register</h3>
+    <form action="/register", method="POST">
+        <label for="uid">UID:</label><br>
+        <input type="text" name="uid" id="uid" placeholder="User ID"><br>
+        <label for="fname">Name:</label><br>
+        <input type="text" name="fname" id="fname" placeholder="First Name">
+        <input type="text" name="lname" id="lname" placeholder="Last Name"> <br>
+        <label for="pwd">Password:</label><br>
+        <input type="password" name="pwd" id="pwd" placeholder="Password"><br>
+        <input type="submit" id="submit-form" value="Register">
+    </form>
+</div>
+{% endblock %}
