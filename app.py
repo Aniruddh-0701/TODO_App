@@ -52,10 +52,6 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
-@app.route('/registration')
-def load():
-    return redirect(url_for('register'))
-
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':

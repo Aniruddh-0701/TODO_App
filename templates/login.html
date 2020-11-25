@@ -2,17 +2,13 @@
 
 {% block head %} 
 <title>Login</title>
-<script defer src="login-page.js"></script>
 {% endblock %}
 
 {% block body %}
-<!-- <div id="error-display">
-    <p> Invalid User ID or Password</p>
-</div> -->
 
 <div id = "login-form" class = "login">
     <h3>Sign in</h3>
-    <form action="/login" method="POST">
+    <form name = "login" action="/login" method="POST" onsubmit="return ValidateLogin()" required>
         <label for="uid">
             <b>UID:</b>
         </label><br>
@@ -22,8 +18,8 @@
         </label><br>
         <input type="password" name="pwd" id="pwd" placeholder="Enter Your Password"><br>
         <input type="reset" value="Reset">
-        <input type="submit" id = "submit-form" value="submit"><br>
-        <a href="/registration">Register</a> <a href="">Forgot Password?</a>
+        <input type="submit" id = "submit-form" value="Submit"><br>
+        <a href="{{ url_for('register') }}">Register</a> <a href="">Forgot Password?</a>
     </form>
 </div>
 {% endblock %}
