@@ -2,10 +2,12 @@ from flask import Flask, redirect, render_template, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy
 from markupsafe import escape
 from datetime import datetime
-import os
+from os import urandom
+from threading import Timer
+import webbrowser
 
 app = Flask(__name__)
-app.secret_key = os.urandom(16)
+app.secret_key = urandom(16)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
 db = SQLAlchemy(app)
 
@@ -158,5 +160,10 @@ def update(id):
     else:
         return render_template('update.html', task = taskUpdate)
 
+def open_browser():
+      webbrowser.open('http://127.0.0.1:5000/', new = 1, autoraise=True)
+
 if __name__ == "__main__":
+    Timer(1, open_browser).start()
     app.run(debug=False)
+    exit()
