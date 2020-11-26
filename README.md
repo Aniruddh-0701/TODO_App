@@ -12,4 +12,4 @@ The py files will act as back end to get input and process the data and put or g
 
 ## Main backend: [App](app.py)
 
-## Download app at [todo_app.rar](https://raw.githubusercontent.com/Aniruddh-0701/TODO_App/master/TodoApp.rar)
+## Download app at [todo_app.rar](TodoApp.rar)
