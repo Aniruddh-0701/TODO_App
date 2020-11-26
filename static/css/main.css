@@ -25,7 +25,26 @@ table{
 div.login{
     background-color: skyblue;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
+    margin-left: 450pt;
+    margin-right: 450pt;
+    margin-top: 175pt;
+    padding-top: 15px;
+    height: 200pt;
+}
+
+h3{
+    color: royalblue;
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif;
+    /* float: inherit; */
+}
+
+div.register{
+    background-color: skyblue;
+    text-align: center;
+    margin-left: 450pt;
+    margin-right: 450pt;
+    margin-top: 150pt;
+    padding-top: 5px;
+    height: 250pt;
 }

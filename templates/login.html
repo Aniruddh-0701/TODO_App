@@ -2,24 +2,23 @@
 
 {% block head %} 
 <title>Login</title>
+<script type="text/javascript" src="{{ url_for('static', filename='js/validator.js')}}"></script>
 {% endblock %}
 
 {% block body %}
 
 <div id = "login-form" class = "login">
     <h3>Sign in</h3>
-    <form name = "login" action="/login" method="POST" onsubmit="return ValidateLogin()" required>
-        <label for="uid">
-            <b>UID:</b>
-        </label><br>
-        <input type="text" name="uid" id="uid" placeholder="User ID"><br>
-        <label for="pwd">
-            <b>Password:</b>
-        </label><br>
-        <input type="password" name="pwd" id="pwd" placeholder="Enter Your Password"><br>
-        <input type="reset" value="Reset">
-        <input type="submit" id = "submit-form" value="Submit"><br>
-        <a href="{{ url_for('register') }}">Register</a> <a href="">Forgot Password?</a>
-    </form>
+    <div class="lform">
+        <form name = "login" action="/login" method="POST" onsubmit="return ValidateLogin()" required>
+            <!-- UID -->
+            <input type="text" name="uid" id="uid" placeholder="User ID"><br><br>
+            <!-- Password: -->
+            <input type="password" name="pwd" id="pwd" placeholder="Enter Your Password"><br><br>
+            <input type="reset" value="Reset">
+            <input type="submit" id = "submit-form" value="Submit"><br><br>
+            <a href="{{ url_for('register') }}">Register</a>&nbsp;&nbsp;&nbsp;<a href="{{ url_for('forgotPwd') }}">Forgot Password?</a>
+        </form>
+    </div>
 </div>
 {% endblock %}

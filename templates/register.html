@@ -2,6 +2,7 @@
 
 {% block head %} 
 <title>Register</title>
+<script type="text/javascript" src="{{ url_for('static', filename='js/validator.js')}}"></script>
 {% endblock %}
 
 {% block body %}
@@ -9,15 +10,16 @@
 <div id="register-form" class="register">
     <h3>Register</h3>
     <form action="/register", method="POST" onsubmit="validPwd()">
-        <label for="uid">UID:</label><br>
-        <input type="text" name="uid" id="uid" oninput="return ValidateUID()" placeholder="User ID" required><br>
-        <label for="fname">Name:</label><br>
-        <input type="text" name="fname" id="fname" oninput="return ValidateName('fname')" placeholder="First Name" required>
-        <input type="text" name="lname" id="lname" oninput="return ValidateName('lname')" placeholder="Last Name" > <br>
-        <label for="pwd">Password:</label><br>
+        <!-- UID: -->
+        <input type="text" name="uid" id="uid" oninput="return ValidateUID()" placeholder="User ID" required><br><br>
+        <!-- Name: -->
+        <input type="text" name="fname" id="fname" oninput="return ValidateName('fname')" placeholder="First Name" required><br><br>
+        <input type="text" name="lname" id="lname" oninput="return ValidateName('lname')" placeholder="Last Name" > <br><br>
+        <!-- Password: -->
         <input type="password" name="pwd" id="pwd" oninput="return ValidatePwd()" placeholder="Password" required><br>
         <input type="checkbox" onclick="showPwd()">Show Password <br>
-        <input type="submit" id="submit-form" value="Register">
+        <input type="submit" id="submit-form" value="Register"><br><br>
+        Have an account? <a href="{{url_for('login')}}">Sign In</a>
     </form>
 </div>
 {% endblock %}

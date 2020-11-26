@@ -1,0 +1,22 @@
+{% block head %} 
+<title>Update</title>
+<!-- <script type="text/javascript" src="{{ url_for('static', filename='js/validator.js')}}"></script> -->
+{% endblock %}
+
+{% block body %}
+<div id = "update-form" class = "login">
+    <h3>Update Task</h3>
+    <div class="uform">
+        <form name = "update" action="/update/{{task.id}}" method="POST" required>
+            <!-- Task: -->
+            <input type="text" name="task" id="task", value="{{task.content}}">
+            <br>
+            <label for="deadline"><b>Deadline:</b></label>
+            <input type="date" name="deadline" id="deadline" value="{{ task.deadline.date() }}">
+            <br>
+            <input type="submit" id = "submit-form" value="Submit"><br><br>
+            <!-- <a href="{{ url_for('register') }}">Register</a>&nbsp;&nbsp;&nbsp;<a href="{{ url_for('forgotPwd') }}">Forgot Password?</a> -->
+        </form>
+    </div>
+</div>
+{% endblock %}
