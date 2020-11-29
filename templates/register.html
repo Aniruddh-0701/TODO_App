@@ -11,12 +11,32 @@
     <h3>Register</h3>
     <form action="/register", method="POST" onsubmit="validPwd()">
         <!-- UID: -->
-        <input type="text" name="uid" id="uid" oninput="return ValidateUID()" placeholder="User ID" required><br><br>
+        <input type="text" name="uid" id="uid" oninput="return ValidateUID()" placeholder="User ID" required>
+        <div class="tooltip">
+            <img src="{{ url_for('static', filename = '/images/info_button.jpg') }}" alt="Hint" height="15px" width="15px" />
+            <span class="tooltiptext">Tooltip text</span>
+        </div> 
+        <br><br>
         <!-- Name: -->
-        <input type="text" name="fname" id="fname" oninput="return ValidateName('fname')" placeholder="First Name" required><br><br>
-        <input type="text" name="lname" id="lname" oninput="return ValidateName('lname')" placeholder="Last Name" > <br><br>
+        <input type="text" name="fname" id="fname" oninput="return ValidateName('fname')" placeholder="First Name" required>
+        <div class="tooltip">
+            <img src="{{ url_for('static', filename = '/images/info_button.jpg') }}" alt="Hint" height="15px" width="15px" />
+            <span class="tooltiptext">Tooltip text</span>
+        </div><br><br>
+        
+        <input type="text" name="lname" id="lname" oninput="return ValidateName('lname')" placeholder="Last Name" > 
+        <div class="tooltip">
+            <img src="{{ url_for('static', filename = '/images/info_button.jpg') }}" alt="Hint" height="15px" width="15px" />
+            <span class="tooltiptext">Tooltip text</span>
+        </div><br><br>
+
         <!-- Password: -->
-        <input type="password" name="pwd" id="pwd" oninput="return ValidatePwd()" placeholder="Password" required><br>
+        <input type="password" name="pwd" id="pwd" oninput="return ValidatePwd()" placeholder="Password" required>
+        <div class="tooltip">
+            <img src="{{ url_for('static', filename = '/images/info_button.jpg') }}" alt="Hint" height="15px" width="15px" />
+            <span class="tooltiptext">Tooltip text</span>
+        </div>
+        <br>
         <input type="checkbox" onclick="showPwd()">Show Password <br>
         <input type="submit" id="submit-form" value="Register"><br><br>
         Have an account? <a href="{{url_for('login')}}">Sign In</a>
