@@ -5,6 +5,7 @@ from datetime import datetime
 from os import urandom
 from threading import Timer
 import webbrowser
+from subprocess import call
 
 app = Flask(__name__)
 app.secret_key = urandom(16)
@@ -18,7 +19,7 @@ class Todo(db.Model):
     __tablename__ = "Tasks"
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(200), nullable=False)
-    completed = db.Column(db.Integer, default=0)  # Currently unused
+    completed = db.Column(db.Integer, default=0)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     deadline = db.Column(db.DateTime)
     user = db.Column(db.String(100), nullable=False)
@@ -160,10 +161,25 @@ def update(id):
     else:
         return render_template('update.html', task = taskUpdate)
 
+@app.route("/mark-as-done/<int:id>")
+def markAsDone(id):
+    taskDone = Todo.query.get_or_404(id)
+    taskDone.completed = 1
+    db.session.commit()
+    return redirect(url_for('tasks'))
+
+@app.route("/mark-as-pending/<int:id>")
+def pending(id):
+    taskPending = Todo.query.get_or_404(id)
+    taskPending.completed = 0
+    db.session.commit()
+    return redirect(url_for('tasks'))
+
 def open_browser():
       webbrowser.open('http://127.0.0.1:5000/', new = 1, autoraise=True)
 
 if __name__ == "__main__":
     Timer(1, open_browser).start()
-    app.run(debug=True)
-    exit()
+    app.run(debug=False)
+    # exit()
+    # call('waitress-serve app:app')

@@ -1,11 +1,14 @@
 th {
     border: 1px solid black;
+    width: auto;
+    height: 50 px;
     text-align: center;
     border-collapse: collapse;
     background-color: #d8d812;
 }
 
 td{
+    width: fit-content;
     text-align: center;
     border: 1px solid black;
     border-collapse: collapse;
@@ -16,6 +19,9 @@ div.content{
     margin-right: auto;
 }
 table{
+    width: 50%;
+    border: 1px solid black;
+    border-collapse: collapse;
     text-align: center;
     align-self: center;
     margin-left: auto;

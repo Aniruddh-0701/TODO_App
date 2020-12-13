@@ -4,3 +4,6 @@
 /dist/
 /Lib/
 /Scripts/
+.vscode
+.vs
+server.py

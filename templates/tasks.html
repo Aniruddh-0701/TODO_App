@@ -15,6 +15,7 @@
         <tr>
             <th>Task</th>
             <th>Created On</th>
+            <th>Status</th>
             <th>Deadline</th>
             <th>Actions</th>
         </tr>
@@ -22,11 +23,21 @@
             <tr>
                 <td>{{ task.content }}</td>
                 <td>{{ task.date_created.date() }}</td>
+                {% if task.completed == 1: %}
+                    <td>Done</td>
+                {% else: %}
+                    <td>Pending</td>
+                {% endif %}
                 <td>{{ task.deadline.date() }}</td>
                 <td>
                     <a href="/delete/{{task.id}}">Delete</a>
-                    <br>
                     <a href="/update/{{task.id}}">Update</a>
+                    <br>
+                    {% if task.completed == 1: %}
+                        <a href="/mark-as-pending/{{task.id}}">Mark as pending</a>
+                    {% else: %}
+                        <a href="/mark-as-done/{{task.id}}">Mark as done</a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
