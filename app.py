@@ -2,10 +2,10 @@ from flask import Flask, redirect, render_template, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy
 from markupsafe import escape
 from datetime import datetime
-from os import urandom
+from os import urandom, getcwd
 from threading import Timer
 import webbrowser
-from subprocess import call
+from waitress import serve
 
 app = Flask(__name__)
 app.secret_key = urandom(16)
@@ -176,10 +176,9 @@ def pending(id):
     return redirect(url_for('tasks'))
 
 def open_browser():
-      webbrowser.open('http://127.0.0.1:5000/', new = 1, autoraise=True)
+      webbrowser.open('http://127.0.0.1:0701/', new = 1, autoraise=True)
 
 if __name__ == "__main__":
     Timer(1, open_browser).start()
-    app.run(debug=False)
-    # exit()
-    # call('waitress-serve app:app')
+    # app.run(debug=False)
+    serve(app, listen='*:0701')
