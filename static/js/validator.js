@@ -3,10 +3,9 @@ function ValidateLogin() {
     const password = document.getElementById("pwd").value;
     if (username != "" && password != ""){
         if (username != username.toUpperCase()) {
-            alert("You have successfully logged in");
             return true;
         } else {
-            alert("Invalid Username");
+            alert("Invalid Username format");
             return false;
         }
     }else{
