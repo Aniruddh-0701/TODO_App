@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="index" content="width = device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible">
-        <link rel="icon" href="{{ url_for('static', filename='images/app_icon.png') }}" type="image/icon type">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        {% block head %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="index" content="width = device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible">
+    <link rel="icon" href="{{ url_for('static', filename='images/app_icon.png') }}" type="image/icon type">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% block head %}{% endblock %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+        <p class='flash {{ category }}'>{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</head>
+
+<body>
+    {% block body %}{% endblock %}
+</body>
+
 </html>

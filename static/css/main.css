@@ -125,3 +125,53 @@ div.reset-form{
     visibility: visible;
     opacity: 1;
   }
+
+.flash {
+    width: 20%;
+    height: 20%;
+    font-size: larger;
+    align-self: center;
+    text-align: center;
+    padding: 1% 1%;
+    border-radius: 6px;
+
+    -moz-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Firefox */
+    -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Safari and Chrome */
+    -o-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Opera */
+    animation: cssAnimation 0s ease-in 5s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        padding: 0 0;
+        overflow:hidden;
+    }
+}
+@-webkit-keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        padding: 0% 0;
+        visibility:hidden;
+    }
+}
+
+.success {
+    background-color: #1d800e;
+    color: #fff;
+}
+
+.error {
+    background-color: #a92921;
+    color: #fff;
+}
+
+.form_input {
+    height: 10%;
+}
