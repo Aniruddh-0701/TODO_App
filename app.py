@@ -1,20 +1,23 @@
-from flask import Flask, redirect, render_template, url_for, request, session
-from flask_sqlalchemy import SQLAlchemy
-from markupsafe import escape
-from datetime import datetime
-from os import urandom, getcwd
+from os import urandom
 from threading import Timer
 import webbrowser
+from datetime import datetime
+
+from flask import Flask, redirect, render_template, url_for, request, session
+from flask.helpers import flash
+from flask_sqlalchemy import SQLAlchemy
 from waitress import serve
 
+from _pass import *
+
+# App init
 app = Flask(__name__)
-app.secret_key = urandom(16)
+app.secret_key = urandom(16)  # Secret key
+# DB configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
 db = SQLAlchemy(app)
 
-userId = "Guest"
-
-
+# Table manager classes
 class Todo(db.Model):
     __tablename__ = "Tasks"
     id = db.Column(db.Integer, primary_key=True)
@@ -35,6 +38,7 @@ class Users(db.Model):
     password = db.Column(db.String(16), nullable=False)
 
 
+# Start dir
 @app.route("/")
 def index():
     if "username" in session:
@@ -42,21 +46,28 @@ def index():
     return redirect(url_for("login"))
 
 
+# Login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         uid = request.form["uid"]
+        pwd = hash(request.form["pwd"])
         try:
             user = Users.query.filter_by(_id=uid).first()
-            session["username"] = user.username
-            # return redirect(url_for('tasks'))
+            if check_password(user.password, pwd):
+                flash("Login successful", "success")
+                session["username"] = user.username
+                return redirect(url_for("tasks"))
+            else:
+                flash("InCorrect Username or Password", "error")
+                3 / 0
         except:
-            render_template("login.html")
-        finally:
-            return redirect(url_for("tasks"))
+            flash("User does not exist", "error")
+            return render_template("login.html")
     return render_template("login.html")
 
 
+# Logout
 @app.route("/logout")
 def logout():
     # remove the username from the session if it's there
@@ -64,6 +75,7 @@ def logout():
     return redirect(url_for("index"))
 
 
+# register
 @app.route("/register", methods=["POST", "GET"])
 def register():
     if request.method == "POST":
@@ -71,7 +83,7 @@ def register():
         userId = uid = request.form["uid"]
         fname = request.form["fname"]
         lname = request.form["lname"]
-        pwd = request.form["pwd"]
+        pwd = encrypt_password(request.form["pwd"])
         new_user = Users(_id=uid, username=fname + " " + lname, password=pwd)
 
         db.session.add(new_user)
@@ -81,6 +93,7 @@ def register():
         return render_template("register.html")
 
 
+# forgot password
 @app.route("/forgot-password", methods=["GET", "POST"])
 def forgotPwd():
     if request.method == "POST":
@@ -89,8 +102,9 @@ def forgotPwd():
         fname = request.form["fname"]
         lname = request.form["lname"]
         user = Users.query.filter_by(_id=userId).first()
-        username = fname + ' ' + lname
-        if user == None: return f"User ID does not exist"
+        username = fname + " " + lname
+        if user == None:
+            return f"User ID does not exist"
         elif user.username == username:
             return redirect(url_for("reset"))
         else:
@@ -103,6 +117,7 @@ def forgotPwd():
         return render_template("forgot-password.html")
 
 
+# reset password
 @app.route("/reset-password", methods=["GET", "POST"])
 def reset():
     global userId
@@ -117,6 +132,7 @@ def reset():
         return render_template("reset-password.html", uId=userId)
 
 
+# tasks page
 @app.route("/tasks", methods=["POST", "GET"])
 def tasks():
     if request.method == "POST":
@@ -130,12 +146,17 @@ def tasks():
         return redirect("/tasks")
 
     else:
-        tasks = Todo.query.order_by(Todo.date_created).filter_by(user = session['username']).all()
+        tasks = (
+            Todo.query.order_by(Todo.date_created)
+            .filter_by(user=session["username"])
+            .all()
+        )
         return render_template("tasks.html", tasks=tasks)
         # except:
         #     return render_template("tasks.html")
 
 
+# delete tasks
 @app.route("/delete/<int:id>")
 def delete(id):
     taskDelete = Todo.query.get_or_404(id)
@@ -147,38 +168,47 @@ def delete(id):
     except:
         return "An error was encountered"
 
-@app.route("/update/<int:id>", methods = ['GET', 'POST'])
+
+# update tasks
+@app.route("/update/<int:id>", methods=["GET", "POST"])
 def update(id):
     taskUpdate = Todo.query.get_or_404(id)
-    if request.method == 'POST':
-        task_content = request.form['task']
+    if request.method == "POST":
+        task_content = request.form["task"]
         task_ddl = datetime.strptime(request.form["deadline"], r"%Y-%m-%d")
         # task = Todo.query.filter_by(id = id)
         taskUpdate.content = task_content
         taskUpdate.deadline = task_ddl
         db.session.commit()
-        return redirect(url_for('tasks'))
+        return redirect(url_for("tasks"))
     else:
-        return render_template('update.html', task = taskUpdate)
+        return render_template("update.html", task=taskUpdate)
 
+
+# mark task as done
 @app.route("/mark-as-done/<int:id>")
 def markAsDone(id):
     taskDone = Todo.query.get_or_404(id)
     taskDone.completed = 1
     db.session.commit()
-    return redirect(url_for('tasks'))
+    return redirect(url_for("tasks"))
 
+
+# mark task as pending
 @app.route("/mark-as-pending/<int:id>")
 def pending(id):
     taskPending = Todo.query.get_or_404(id)
     taskPending.completed = 0
     db.session.commit()
-    return redirect(url_for('tasks'))
+    return redirect(url_for("tasks"))
 
+
+# Launch the app in browser
 def open_browser():
-      webbrowser.open('http://127.0.0.1:0701/', new = 1, autoraise=True)
+    webbrowser.open("http://127.0.0.1:0701/", new=1, autoraise=True)
+
 
 if __name__ == "__main__":
     Timer(1, open_browser).start()
-    # app.run(debug=False)
+    # app.run(debug=True)
     serve(app, listen='*:0701')
