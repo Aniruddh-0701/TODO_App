@@ -1,6 +1,0 @@
-{
-    "python.pythonPath": "D:\\Programming\\Python\\python.exe",
-    "activestate.promptRuntimeCreation": false,
-    "git.ignoreLimitWarning": true,
-    "python.formatting.provider": "black"
-}
