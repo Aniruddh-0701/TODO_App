@@ -1,58 +1,84 @@
-{% extends 'base.html' %}
-
-{% block head %}
+{% extends 'base.html' %} {% block head %}
 <title>Register</title>
 <script type="text/javascript" src="{{ url_for('static', filename='js/validator.js')}}"></script>
-{% endblock %}
+<script>
+    function check_duplicate_userid() {
+        let xhttp = new XMLHttpRequest();
+        let user_id = document.getElementById("uid").value;
+        let flag = false;
+        console.log(user_id);
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // console.log(this.responseText);
+                alert(this.responseText);
+                if (event.preventDefault) {
+                    event.preventDefault();
+                } else {
+                    event.returnValue = false; // for IE as dont support preventDefault;
+                }
+            } else
+                flag = true;
+            // }
+        }
+        xhttp.open("POST", "/check-duplicate/" + user_id, true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(user_id);
 
-{% block body %}
+        return flag;
+    }
+</script>
+{% endblock %} {% block body %}
 
 <div id="register-form" class="register">
     <h3>Register</h3>
-    <form action="/register" , method="POST" onsubmit="validPwd()">
+    <form action="/register" , method="POST" onsubmit="return check_duplicate_userid()">
         <!-- UID: -->
-        <input type="text" name="uid" id="uid" oninput="return ValidateUID()" placeholder="User ID" required>
+        <input type="text" name="uid" id="uid" value="{{user_id}}" oninput="return ValidateUID()" placeholder="User ID"
+            required />
         <div class="tooltip">
             <img src="{{ url_for('static', filename = '/images/info_button.jpg') }}" alt="Hint" height="15px"
                 width="15px" />
             <span class="tooltiptext">
-                The ID should consist of <br>
-                One Lowercase Alphabet a-z <br>
-                One digit 0-9 <br>
-                (Optional) One Special Character @, _, $</span>
+                Lowercase Alphabet a-z <br />
+                digit 0-9 <br />
+                (Optional) Special Character<br> @, _, $, -</span>
         </div>
-        <br><br>
+        <br /><br />
 
         <!-- Name: -->
-        <input type="text" name="fname" id="fname" oninput="return ValidateName('fname')" placeholder="First Name"
-            required>
+        <input type="text" name="fname" id="fname" value="{{fname}}" oninput="return ValidateName('fname')"
+            placeholder="First Name" required />
         <div class="tooltip">
             <img src="{{ url_for('static', filename = '/images/info_button.jpg') }}" alt="Hint" height="15px"
                 width="15px" />
             <span class="tooltiptext">Alphabets [a-z], [A-Z]</span>
-        </div><br><br>
+        </div>
+        <br /><br />
 
-        <input type="text" name="lname" id="lname" oninput="return ValidateName('lname')" placeholder="Last Name">
+        <input type="text" name="lname" id="lname" value="{{lname}}" oninput="return ValidateName('lname')"
+            placeholder="Last Name" />
         <div class="tooltip">
             <img src="{{ url_for('static', filename = '/images/info_button.jpg') }}" alt="Hint" height="15px"
                 width="15px" />
             <span class="tooltiptext">Alphabets [a-z], [A-Z]</span>
-        </div><br><br>
+        </div>
+        <br /><br />
 
         <!-- Password: -->
-        <input type="password" name="pwd" id="pwd" oninput="return ValidatePwd()" placeholder="Password" required>
+        <input type="password" name="pwd" id="pwd" value="{{pwd}}" oninput="return ValidatePwd()" placeholder="Password"
+            required />
         <div class="tooltip">
             <img src="{{ url_for('static', filename = '/images/info_button.jpg') }}" alt="Hint" height="15px"
                 width="15px" />
-            <span class="tooltiptext">The Password should consist of <br>
-                One Lowercase Alphabet a-z<br>
-                One Uppercase Alphabet A-Z<br>
-                One digit 0-9<br>
-                One Special Character @, _</span>
+            <span class="tooltiptext">
+                Lowercase Alphabet a-z<br />
+                Uppercase Alphabet A-Z<br />
+                digit 0-9<br />
+                Special Character @, _</span>
         </div>
-        <br>
-        <input type="checkbox" onclick="showPwd()">Show Password <br>
-        <input type="submit" id="submit-form" value="Register"><br><br>
+        <br />
+        <input type="checkbox" onclick="showPwd()" />Show Password <br />
+        <input type="submit" id="submit-form" value="Register" /><br /><br />
         Have an account? <a href="{{url_for('login')}}">Sign In</a>
     </form>
 </div>
