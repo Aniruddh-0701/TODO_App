@@ -4,6 +4,8 @@
 /dist/
 /Lib/
 /Scripts/
-.vscode
-.vs
+.vscode/
+.pytest_cache/
+__pycache__/
+.vs/
 server.py
