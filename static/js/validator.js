@@ -27,7 +27,7 @@ function ValidateName(name){
 }
 
 function ValidateUID(){
-    var regex = /^[a-z0-9_@$]+$/;
+    var regex = /^[a-z0-9_@$-]+$/;
  
         //Validate TextBox value against the Regex.
         var isValid = regex.test(document.getElementById("uid").value);

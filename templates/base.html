@@ -12,14 +12,24 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
-        <p class='flash {{ category }}'>{{ message }}</p>
+    <p class='flash {{ category }}'>{{ message }}</p>
     {% endfor %}
     {% endif %}
     {% endwith %}
 </head>
 
 <body>
-    {% block body %}{% endblock %}
+    <div class="nav">
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <!-- {% block dropdown %} {% endblock %} -->
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+    <div class="app">
+        {% block body %}{% endblock %}
+    </div>
 </body>
 
 </html>
