@@ -1,22 +1,25 @@
-{% block head %} 
+{% extends 'base.html' %}
+
+{% block head %}
 <title>Update</title>
 <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/validator.js')}}"></script> -->
 {% endblock %}
 
 {% block body %}
-<div id = "update-form" class = "login">
-    <h3>Update Task</h3>
-    <div class="uform">
-        <form name = "update" action="/update/{{task.id}}" method="POST" required>
+<div id="update-form" class="uform">
+    <h3 style="text-align: center;">Update Task</h3>
+    <div class="uform-content">
+        <form name="update" action="/update/{{task.id}}" method="POST" required>
             <!-- Task: -->
-            <input type="text" name="task" id="task", value="{{task.content}}">
-            <br>
-            <label for="deadline"><b>Deadline:</b></label>
+            <label for="task"><b>Description:</b></label>
+            <input type="text" name="task" id="task" , value="{{task.content}}">
+            <br><br>
+            <label for="deadline"><b>Deadline:&nbsp; &nbsp;</b></label>
             <input type="date" name="deadline" id="deadline" value="{{ task.deadline.date() }}">
-            <br>
-            <input type="submit" id = "submit-form" value="Submit"><br><br>
-            <!-- <a href="{{ url_for('register') }}">Register</a>&nbsp;&nbsp;&nbsp;<a href="{{ url_for('forgotPwd') }}">Forgot Password?</a> -->
+            <br><br>
+            <input type="submit" id="submit-form" value="Submit"><br><br>
         </form>
     </div>
+</div>
 </div>
 {% endblock %}
